@@ -10,7 +10,6 @@ help:
 	@echo "  prod            Run the production environment"
 	@echo "  prod-%          Run a specific command in the production environment"
 
-# Dev compiles the compose files for the needed services and runs the dev profile.
 dev:
 	docker compose \
 		-f compose.yml \
@@ -22,7 +21,6 @@ dev:
 dev-down:
 	docker compose -p ember down
 
-# Dev-% compiles the compose files for the needed services and runs the dev profile with the given command.
 dev-%:
 	docker compose \
 		-f compose.yml \
