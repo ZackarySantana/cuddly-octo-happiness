@@ -1,0 +1,46 @@
+services:
+    leaves:
+        profiles: ["dev", "prod"]
+        build:
+            context: ./leaves
+        environment:
+            TRUNK_URL: http://localhost:8081
+            PORT: 8080
+        volumes:
+            - ./leaves:/app
+        ports:
+            - "8080:8080"
+        networks:
+            - internal
+            - external
+        healthcheck:
+            test: curl --fail http://localhost:8080/health || exit 1
+            interval: 10s
+            start_period: 5s
+        restart: on-failure
+
+    trunk:
+        profiles: ["dev", "prod"]
+        build:
+            context: ./trunk
+        environment:
+            PORT: 8080
+        env_file:
+            - .env
+        volumes:
+            - ./trunk:/app
+        ports:
+            - "8081:8080"
+        networks:
+            - internal
+        healthcheck:
+            test: curl --fail http://localhost:8080/health || exit 1
+            interval: 10s
+            start_period: 5s
+        restart: on-failure
+
+networks:
+    internal:
+        driver: bridge
+    external:
+        driver: bridge
