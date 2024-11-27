@@ -6,8 +6,6 @@ services:
         environment:
             TRUNK_URL: http://localhost:8081
             PORT: 8080
-        volumes:
-            - ./leaves:/app
         ports:
             - "8080:8080"
         networks:
@@ -27,8 +25,6 @@ services:
             PORT: 8080
         env_file:
             - .env
-        volumes:
-            - ./trunk:/app
         ports:
             - "8081:8080"
         networks:

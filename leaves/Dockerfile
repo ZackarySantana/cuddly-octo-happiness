@@ -1,28 +1,20 @@
-FROM node:22 as deps
+FROM node:22 AS deps
 WORKDIR /app
 
-# COPY package.json package-lock.json ./
-# RUN npm install --production=false
+COPY package.json package-lock.json ./
+RUN npm install --production=false
 
-# # Build the app.
-# FROM deps as build
+FROM deps AS build
 
-# COPY tsconfig.json tailwind.config.cjs postcss.config.cjs app.config.ts Makefile ./
-# COPY src src
-# COPY public public
+COPY tsconfig.json tailwind.config.cjs postcss.config.cjs app.config.ts ./
+COPY src src
+COPY public public
 
-# RUN npm run build
+RUN npm run build
 
-# # A production dependencies image.
-# # FROM deps as production-deps
+FROM node:22-slim
+WORKDIR /app
 
-# # ENV NODE_ENV=production
-# # RUN npm prune --omit=dev --force
-
-# # Right now, there's no production dependencies.
-# FROM node:22-slim
-# WORKDIR /app
-
-# COPY --from=build /app/.output /app
+COPY --from=build /app/.output /app
 
 CMD ["node", "server/index.mjs"]

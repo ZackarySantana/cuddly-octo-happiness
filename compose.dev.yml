@@ -1,15 +1,19 @@
 services:
     leaves:
-        env_file: "/dev/null"
         build:
             dockerfile: Dockerfile.dev
+        env_file: "/dev/null"
+        volumes:
+            - ./leaves:/app
 
     trunk:
+        build:
+            dockerfile: Dockerfile.dev
         environment:
             MONGODB_URL: http://localhost:27017
         env_file: "/dev/null"
-        build:
-            dockerfile: Dockerfile.dev
+        volumes:
+            - ./trunk:/app
 
     mongodb:
         image: mongo:7.0

@@ -6,7 +6,7 @@ export default function App() {
 
     return (
         <main>
-            <h1 class="text-4xl text-red-500">Hello world!</h1>
+            <h1 class="text-4xl text-blue-500">Hello world!</h1>
             <button
                 class="increment"
                 onClick={() => setCount(count() + 1)}
